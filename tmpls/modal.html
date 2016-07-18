@@ -1,0 +1,16 @@
+<% 	event.date_start = new Date(parseInt(event.start));
+	event.date_end = new Date(parseInt(event.end)); %>
+<div id = "event-meta" class  = "xpull-right">
+    <strong><%= event.title %></strong> (<%= event.id %>)<br>
+    <span><%= calendar.locale["m" + event.date_start.getMonth()] %> <%= event.date_start.getDate() %>, <%= event.date_start.getFullYear() %> <%= event.date_start.getHours() %>:<%= event.date_start.getMinutes() %> <i class = "icon-time"></i></span> - <span><%= event.date_end.getHours() %>:<%= event.date_end.getMinutes() %> <i class = "icon-time"></i></span><br />
+    <div class="row">
+                <div class="col-lg-12">
+	            	<div class="pull-right">
+		            	<p><a href="/survey/appointment.php?id=<%= event.id %>" class="btn btn-info">Edit Appointment</a></p>
+	            	</div>
+                </div>
+            </div>
+</div>
+<!--<div style = "margin: 10px 0">
+    <a href = "<%= event.url %>" class = "btn btn-primary"><i class = "icon-calendar"></i> More info</a>
+</div>-->

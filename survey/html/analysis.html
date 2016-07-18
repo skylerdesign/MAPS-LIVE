@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Analysis</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row reports">
+    <div class="col-lg-12">
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <label>Patient:</label>
+                <select class="form-control" placeholder="User" id="id" name="id">
+                    {{ID:dropdown-patients}}
+                </select>
+            </div>
+            <br><br>
+            <label>Outcome:</label>
+            <select class="form-control" placeholder="Question" id="question" name="question">
+                {{ID:dropdown-questions}}
+            </select>
+            <br><br>
+            <label>Gender:</label>
+            <select class="form-control" placeholder="Gender" id="gender" name="gender">
+                {{ID:dropdown-gender}}
+            </select>
+            <br><br>
+            <label>Primary Substance:</label>
+            <select class="form-control" placeholder="Substance" id="substance" name="substance">
+                {{ID:dropdown-substance}}
+            </select>
+            <br><br>
+            <label>Chart Type:</label>
+            <select class="form-control" id="charttype" name="charttype">
+                {{ID:dropdown-charttype}}
+            </select>
+            <br><br>
+            <label>&nbsp;</label><button type="submit" class="btn btn-success" id="submit">Update</button>&nbsp; <input id="reset" type="reset" value="Reset" class="btn btn-default">
+        </form>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    {{ID:questions}}
+</div><!-- /.row -->
+{{ID:baseline_result}}
+<script>
+
+$(function() {
+	$( "#reset" ).click(function() {
+		$('select option:selected').removeAttr('selected');
+		$('#submit').click();
+	});
+});
+
+// SVG STUFF
+$("rect[height='0']").attr('height', 500);
+$('svg > rect').attr('width', "10");
+</script>
+<style>
+    svg > rect:first-of-type {
+        fill: #337ab7;
+    }
+</style>

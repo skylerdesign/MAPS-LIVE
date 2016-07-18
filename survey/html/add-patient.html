@@ -1,0 +1,97 @@
+<div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">{{ST:add_patient}}</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+<div class="row">
+    <div class="col-md-8">
+        {{ID:alert}}
+        <form method="post" action="add-patient.php">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="{{ST:name}}" name="name">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="{{ST:firstname}}" name="firstname">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="{{ST:lastname}}" name="lastname">
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" placeholder="{{ST:email}}" name="email">
+            </div>
+            <!-- ROLE -->
+            <div class="form-group hidden">
+	               <input type="text" class="form-control"  id="role" name="role" value="3">
+            </div>
+            <div class="form-group hidden">
+                <input type="password" class="form-control" placeholder="{{ST:password}}" name="password" value="nopass">
+            </div>
+            <div class="form-group hidden">
+                <input type="password" class="form-control" placeholder="{{ST:repeat_password}}" name="cpassword" value="nopass">
+            </div>
+            <!-- DOB -->
+            <div class='input-group form-group date' id='datetimepicker'>
+                    <input type='text' class="form-control" placeholder="{{ST:dob}}, i.e. mm/dd/yyyy" id="dob" name="dob" data-date-format="MM/DD/YYYY" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>
+            <!--<div class="input-group date">
+                <input type="text" class="form-control" placeholder="{{ST:dob}}" id="xdob" name="dob" data-date-format="MM/DD/YYYY">
+                <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span> 
+            </div>-->
+            <script type="text/javascript">
+					    $(document).ready(function() {
+					        $('.date').datetimepicker({
+					            //pickTime: false
+					            //startDate: '-7300d' // 20 years
+					        });
+					    });
+					</script>
+            
+            <!-- Address -->
+            
+            <div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Address</h3>
+			  </div>
+			  <div class="panel-body">
+				  <div class="form-group">
+                <input type="text" class="form-control" placeholder="{{ST:address1}}" name="address1">
+	            </div>
+	            <div class="form-group">
+	                	<input type="text" class="form-control" placeholder="{{ST:address2}}" name="address2">
+	            	</div>
+				<div class="col-xs-4 no-padding">
+				  	<div class="form-group">
+		                <input type="text" class="form-control" placeholder="{{ST:city}}" name="city">
+		            </div>
+				</div>
+				<div class="col-xs-4">
+				  <div class="form-group">
+	                	<input type="text" class="form-control" placeholder="{{ST:state}}" name="state">
+	            	</div>
+				</div>
+				<div class="col-xs-4 no-padding">
+				  	<div class="form-group">
+		                <input type="text" class="form-control" placeholder="{{ST:zip}}" name="zip">
+		            </div>
+				</div>
+
+			  </div>
+			</div>
+            
+
+        </div>
+        <div class="col-md-4">
+            <!--<strong>{{ST:permissions}}:</strong><br/> <input type="checkbox" value="1" name="can_manage_survey" {{ID:can_manage_survey_state}}/> {{ST:can_manage_surveys}}
+            <br><input type="checkbox" value="1" name="can_manage_admins"  {{ID:can_manage_admins_state}}/> {{ST:can_manage_admins}} <br/>
+            <input type="checkbox" value="1" name="email_password" {{ID:email_password_state}}/> {{ST:email_password_to_the_user}}<br/><br/>-->
+            <button type="submit" class="btn btn-info" name="submit" value="1">{{ST:add_patient}}</button>
+            <button class="btn btn-default" type="reset">{{ST:reset}}</button>
+        </form>
+    </div>
+</div><!-- row -->

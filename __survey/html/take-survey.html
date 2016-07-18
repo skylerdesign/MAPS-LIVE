@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{{ID:name}} - {{ST:site_name}}</title>
+<!-- Le styles -->
+<link href="{{ID:base_url}}css/take_survey.css" rel="stylesheet">
+<link href="{{ID:base_url}}css/prettyPhoto.css" rel="stylesheet"/>
+    <link href="{{ID:base_url}}js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script src="{{ID:base_url}}js/jquery-2.1.1.min.js"></script>
+<script src="{{ID:base_url}}js/bootstrap.min.js"></script>
+<script src="{{ID:base_url}}js/jquery.prettyPhoto.js"></script>
+    <script src="{{ID:base_url}}js/bootstrap-datetimepicker/js/moment.js"></script>
+    <script src="{{ID:base_url}}js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+	$("a[rel^='prettyPhoto']").prettyPhoto();
+});
+</script>
+<script>
+$(document).ready(function() {
+//Make sure that only numbers are put in the quantity input
+	$(".field_nd").keydown(function(event) {
+        // Allow: backspace, delete, tab and escape
+        if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || 
+             // Allow: Ctrl+A
+            (event.keyCode == 65 && event.ctrlKey === true) || 
+             // Allow: home, end, left, right
+            (event.keyCode >= 35 && event.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }else {
+            // Ensure that it is a number and stop the keypress
+            if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+                event.preventDefault(); 
+            } 
+        }
+    	});
+    	
+    	//Make sure that only numbers are put in the quantity input
+	$(".field_nc").keydown(function(event) {
+        // Allow: backspace, delete, tab and escape
+        if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || 
+             // Allow: Ctrl+A
+            (event.keyCode == 65 && event.ctrlKey === true) || 
+             // Allow: home, end, left, right
+            (event.keyCode >= 35 && event.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }else {
+            // Ensure that it is a number and stop the keypress
+            if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+                if(event.keyCode != 190){
+                 if(event.keyCode != 110){
+                event.preventDefault(); 
+               } 
+               }
+            } 
+        }
+    	});
+    	
+$.get("{{ID:base_url}}token.php",function(txt){
+  $(".survey_form").append('<input type="hidden" name="ts" value="'+txt+'" />');
+});
+});
+</script>
+<script src="/survey/js/jquery.bootbox.js"></script>
+</head>
+<body>
+	<div class="container" style="-moz-text-size-adjust:auto; -webkit-text-size-adjust:auto; -ms-text-size-adjust:auto;">
+		<br/>
+		<h1><a href="{{ID:site_url}}">{{ST:site_name}}</a></h1>
+		<div class="panel panel-info">
+            <div class="panel-body">
+	<h2>{{ID:name}}</h2>
+	{{ID:description}}
+	</div>
+        </div>
+	{{ID:alert}}
+	<form method="post" action="{{ID:base_url}}take_survey.php{{ID:id_query}}" name="survey{{ID:id}}" id="survey{{ID:id}}" class="survey_form">
+	
+	{{ID:questions}}
+	
+	
+	<div {{ID:hide_buttons}}>
+	<p>
+		<input class="btn btn-info" id="submit" name="submit" value="{{ST:submit_answers}}" type="submit">
+		<!--<input class="btn btn-default" name="save" value="{{ST:save_answers}}" type="submit"></p>-->
+	</div>
+	</form>
+		<br/>
+		
+		<footer>
+			<p>&copy; {{ST:site_name}} {{ID:current_year}}</p>
+		</footer>
+	</div> <!-- /container -->
+<script> 
+	
+	$('#submit').click(function(event) {
+		
+		var myStr = "{{ID:survey_submission_alert}}";
+
+		event.preventDefault(); 
+		
+		var isFormValid = true;
+		var isFormComplete = true;
+		
+		// Checkboxes
+		var checkbox_names = [];
+		$('input[type="checkbox"]').each(function() {
+	        // Creates an array with the names of all the different checkbox group.
+	        checkbox_names[$(this).attr('name')] = true;
+	    });
+	    // Goes through all the names and make sure there's at least one checked.
+	    for (checkbox_name in checkbox_names) {
+	        var checkboxes = $("input[name='" + checkbox_name + "']");
+	        if (checkboxes.filter(':checked').length == 0) {
+	            //alert('none checked in ' + checkbox_name);
+	            isFormComplete = false;
+	            //return false;
+	        } 
+	        else {
+	            // If you need to use the result you can do so without
+	            // another (costly) jQuery selector call:
+	            // var val = radio_buttons.val();
+	            //return true;
+	        }
+	    }
+	    
+		
+		
+		// Radio Buttons
+		var radio_names = [];
+
+	    $('input[type="radio"]').each(function() {
+	        // Creates an array with the names of all the different checkbox group.
+	        radio_names[$(this).attr('name')] = true;
+	    });
+	
+	    // Goes through all the names and make sure there's at least one checked.
+	    for (radio_name in radio_names) {
+	        var radio_buttons = $("input[name='" + radio_name + "']");
+	        if (radio_buttons.filter(':checked').length == 0) {
+	            //alert('none checked in ' + radio_name);
+	            isFormComplete = false;
+	            //return false;
+	        } 
+	        else {
+	            // If you need to use the result you can do so without
+	            // another (costly) jQuery selector call:
+	            // var val = radio_buttons.val();
+	            //return true;
+	        }
+	    }
+	    
+	    // Text Field
+		$('input[type="text"]').each(function() {
+	        if(!$.trim(this.value).length) { // zero-length string AFTER a trim
+	            isFormComplete = false;
+	     	}
+	    });
+
+		
+		if(isFormComplete){
+		    $('#submit').unbind('click').click();
+		}else{
+		  /*if (confirm(myStr)) {
+			    //alert('Thanks for confirming.  Continuing to submit');
+			    $('#submit').unbind('click').click();
+			} else {
+			    //alert('Why did you press cancel? You should have confirmed');
+			    return false;
+			}*/
+			bootbox.dialog({
+			  message: "{{ST:survey_alert_missing_answers}}",
+			  title: "Survey alert: missing answers",
+			  buttons: {
+			    danger: {
+			      label: "{{ST:survey_alert_missing_answers_cancel}}",
+			      className: "btn-danger",
+			      callback: function() {
+				     $('input[name="name_299"]').focus();
+			      },
+			      
+			    },
+			    main: {
+			      label: "{{ST:survey_alert_missing_answers_confirm}}",
+			      className: "btn-success",
+			      callback: function() {
+			        //alert("Primary button");
+			        $('#submit').unbind('click').click();
+			      }
+			    }
+			  }
+			});
+		}
+	});
+	
+	
+	$('XXXa[data-confirm]').click(function(ev) {
+		var href = $(this).attr('href');
+		if (!$('#dataConfirmModal').length) {
+			$('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
+		} 
+		$('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+		$('#dataConfirmOK').attr('href', href);
+		$('#dataConfirmModal').modal({show:true});
+		return false;
+	});
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ID:title}} - {{ST:app_name}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Le styles -->
+<!--<link href="css/bootstrap.css" rel="stylesheet">-->
+<link href="css/prettyPhoto.css" rel="stylesheet"/>
+<link href="css/app.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="print" href="css/print.css">
+
+
+<script src="js/jquery.min.js"></script>
+<!--<script src="js/bootstrap.min.js"></script>-->
+
+<!-- Bootstrap Core CSS -->
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/calendar.css" rel="stylesheet">
+    <!--<link href="/css/bootstrap-datepicker.css" rel="stylesheet">-->
+
+    <!-- MetisMenu CSS -->
+    <link href="/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet">
+    
+     <!-- DataTables CSS -->
+    <link href="/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- jQuery -->
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    
+    <!-- Flot Charts JavaScript -->
+    <script src="/bower_components/flot/excanvas.min.js"></script>
+    <script src="/bower_components/flot/jquery.flot.js"></script>
+    <script src="/bower_components/flot/jquery.flot.pie.js"></script>
+    <script src="/bower_components/flot/jquery.flot.resize.js"></script>
+    <script src="/bower_components/flot/jquery.flot.time.js"></script>
+    <script src="/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+    <!--<script src="/js/flot-data.js"></script>-->
+
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/dist/js/sb-admin-2.js"></script>
+    
+    <!-- Print element script -->
+	<script src="/survey/js/jquery.print.js"></script>
+
+	<script src="js/jquery.placeholder.min.js"></script>
+	<script src="charts/FusionCharts.js"></script>
+	<script type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
+	<script src="js/jquery.prettyPhoto.js"></script>
+	<script src="js/app.js"></script>
+	<script type="text/javascript" charset="utf-8">
+	$(document).ready(function(){
+		$("a[rel^='prettyPhoto']").prettyPhoto();
+	});
+	</script>
+	<script>
+	function toggle_question_type(){
+		$("#choices").empty();
+		$("#choices").append('<input type="text" class="form-control" name="choice[]" value="{{ID:choice_a}}" placeholder="{{ST:choice}}"><br>');
+		if($('#question_type').val() == 'mp' || $('#question_type').val() == 'ma' || $('#question_type').val() == 'dd'){
+			$('#multiple_choice').show();
+		}else{
+			$('#multiple_choice').hide();
+		}
+	}
+	function add_choice_field(){
+		$("#choices").append('<input type="text" class="form-control" name="choice[]" value="{{ID:choice_a}}" placeholder="{{ST:choice}}"><br>');
+		return false;
+	}
+	function add_file_field(){
+		$("#files").append('<input type="file" name="files[]"><br>');
+		return false;
+	}
+	function add_file_field2(){
+		$("#files").append('<input type="file" name="files[]"><br><br>');
+		return false;
+	}
+	function clear_files(){
+		$("#files").empty();
+		return false;
+	}
+	function toggle_question_type2(){
+		$("#choices").empty();
+		$("#choices").append('<input type="text" class="form-control" name="choice[]" value="{{ID:choice_a}}" placeholder="{{ST:choice}}"><br><br>');
+		if($('#question_type').val() == 'mp' || $('#question_type').val() == 'ma' || $('#question_type').val() == 'dd'){
+			$('#multiple_choice').show();
+		}else{
+			$('#multiple_choice').hide();
+		}
+	}
+	function add_choice_field2(){
+		$("#choices").append('<input type="text" class="form-control" name="choice[]" value="{{ID:choice_a}}" placeholder="{{ST:choice}}"><br><br>');
+		return false;
+	}
+	
+	function GetAnswers(id){
+		var survey_id = '{{ID:id}}';
+		$('#myModal').modal('show');
+		$("#modal_content").empty();
+		$("#modal_content").append('<p id="modal_loading">{{ST:loading}}</p>');
+		$.post('results.php',{id: id,survey_id: survey_id}, function(results){
+			$("#modal_content").empty();
+			if(results.status == 1){
+				$("#modal_content").append(results.answers);
+			}else{
+				alert(results.error);
+			}
+		}, "json");
+		return false;
+	}
+	function GetAnswersTemp(id, survey_id){
+		$('#myModal').modal('show');
+		$("#modal_content").empty();
+		$("#modal_content").append('<p id="modal_loading">{{ST:loading}}</p>');
+		$.post('results.php',{id: id,survey_id: survey_id}, function(results){
+			$("#modal_content").empty();
+			if(results.status == 1){
+				$("#modal_content").append(results.answers);
+			}else{
+				alert(results.error);
+				alert(results.status);
+			}
+		}, "json");
+		return false;
+	}
+	
+	</script>
+	<script>
+	$(document).ready(function() {
+	//Make sure that only numbers are put in the quantity input
+		$(".field_nd").keydown(function(event) {
+	        // Allow: backspace, delete, tab and escape
+	        if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || 
+	             // Allow: Ctrl+A
+	            (event.keyCode == 65 && event.ctrlKey === true) || 
+	             // Allow: home, end, left, right
+	            (event.keyCode >= 35 && event.keyCode <= 39)) {
+	                 // let it happen, don't do anything
+	                 return;
+	        }else {
+	            // Ensure that it is a number and stop the keypress
+	            if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+	                event.preventDefault(); 
+	            } 
+	        }
+	    	});
+	    	
+	});
+	</script>
+	
+	
+	<!-- Custom -->
+	<script src="js/maps.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/lib/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css">
+<script src="/bower_components/moment/min/moment.min.js"></script>
+<script src="/lib/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+
+    
+    
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;">
+
+	            <!-- Brand and toggle get grouped for better mobile display -->
+	            <div class="navbar-header">
+	                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                </button>
+	                <a class="navbar-brand" href="index.php">{{ST:site_name}}</a>
+	            </div>
+	
+	            <!-- Collect the nav links, forms, and other content for toggling -->
+	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                <!--<ul class="nav navbar-nav">
+	                    <li {{ID:menu_home_active}}><a href="index.php">{{ST:surveys}}</a></li>
+	                    <li {{ID:menu_admins_active}}"><a href="admins.php">{{ST:administrators}}</a></li>
+	                </ul>-->
+	                
+	                
+			<ul class="nav navbar-top-links navbar-right">
+               
+                
+                <li class="dropdown">
+                	<strong>Hi, {{ID:currentusername}}</strong>
+                	
+                </li>
+                <li class="dropdown">
+                	
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+	                    <!--{{ID:right_menu}}-->
+                        <li><a href="/survey/profile.php"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <!--<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>-->
+                        <li class="divider"></li>
+                        <li><a href="/survey/signout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        
+                        </li>
+                        
+                       
+                        <!--<li {{ID:menu_home_active}}><a href="index.php">{{ST:surveys}}</a></li>-->
+                   <!-- <li {{ID:menu_admins_active}}"><a href="admins.php">{{ST:administrators}}</a></li>-->
+
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+            
+            <!-- SIDEBAR -->
+            <div class="navbar-default sidebar" role="navigation">
+			    <div class="sidebar-nav navbar-collapse">
+			        <ul class="nav" id="side-menu">
+			            <li class="sidebar-search">
+			                <!--<div class="input-group custom-search-form">
+			                    <input type="text" class="form-control" placeholder="Search...">
+			                    <span class="input-group-btn">
+			                    <button class="btn btn-default" type="button">
+			                        <i class="fa fa-search"></i>
+			                    </button>
+			                </span>
+			                </div>-->
+			            </li>
+			            <!-- DASHBOARD -->
+			            <li>
+			                <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+			            </li>
+			            <!-- PATIENTS -->
+			            <li>
+			                <a href="/survey/patients.php"><i class="fa fa-users fa-fw"></i> Patients</a>
+			            </li>
+			            <!-- PRACTIONERS -->
+			            <li>
+			                <a href="/survey/clinicians.php"><i class="fa fa-user-md fa-fw"></i> Clinicians</a>
+			            </li>
+			            <!-- STAFF -->
+			            <li>
+			                <a href="/survey/staff.php"><i class="fa fa-user-md fa-fw"></i> Staff</a>
+			            </li>
+			            <!-- DIRECTORS -->
+			            <li>
+			                <a href="/survey/directors.php"><i class="fa fa-user-md fa-fw"></i> Directors</a>
+			            </li>
+			            <!-- CLINICS -->
+			            <li>
+			                <a href="/survey/clinics.php"><i class="fa fa-building fa-fw"></i> Clinics</a>
+			            </li>
+			            <li>
+			                <a href="/survey/appointments.php"><i class="fa fa-calendar fa-fw"></i> Appointments</span></a>
+			            </li>
+			            <!-- SURVEY ANALYSIS -->
+			            <li>
+			            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
+			                <ul class="nav nav-second-level">
+			                    <!--<li>
+			                        <a href="/survey/flot.html">Flot Charts</a>
+			                    </li>
+			                    <li>
+			                        <a href="/survey/morris.html">Morris.js Charts</a>
+			                    </li>-->
+			                    <li>
+			                        <a href="/survey/analysis.php">Analysis</a>
+			                    </li>
+			                    <!--<li>
+			                        <a href="/survey/analysis-by-gender.php">By Gender</a>
+			                    </li>
+			                    <li>
+			                        <a href="/survey/analysis-by-substance.php">By Primary Substance</a>
+			                    </li>-->
+			                    
+			                </ul>
+			                <!-- /.nav-second-level -->
+			            </li>
+			            <!-- NEW SURVEY -->
+			            <!--<li>
+			                <a href="/survey"><i class="fa fa-gears fa-fw"></i> Analysis</a>
+			            </li>-->
+			            
+			            <!-- SURVEY SETUP -->
+			            <li>
+			                <a href="#"><i class="fa fa-wrench fa-fw"></i> System Setup<span class="fa arrow"></span></a>
+			            <ul class="nav nav-second-level">
+			                    
+			                    <!-- NEW SURVEY -->
+					            <li>
+					                <a href="/survey/setup.php"><i class="fa fa-edit fa-fw"></i> Manage Surveys</a>
+					            </li>
+			                </ul>  
+			            </li>
+			
+			            </li>
+			        </ul>
+			    </div>
+			    <!-- /.sidebar-collapse -->
+			</div>
+			<!-- /.navbar-static-side -->
+
+	    </div><!-- /.navbar-collapse -->
+	       
+	        
+	    </nav>
+
+        <div id="page-wrapper" style="min-height:550px;">
+	        
+	        {{ID:content}}
+	        <div style="clear:both;"></div>
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+	<div class="xcontainer">
+		<footer>
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;&copy; {{ID:current_year}} {{ST:site_name}}</p>
+		</footer>
+	</div> <!-- /container -->
+	
+	 <!-- Metis Menu Plugin JavaScript -->
+    <script src="/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+	<script src="/bower_components/raphael/raphael-min.js"></script>
+    <script src="/bower_components/morrisjs/morris.min.js"></script>
+    <!--<script src="/js/morris-data.js"></script>-->
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/dist/js/sb-admin-2.js"></script>
+    <script>
+		var value = $('select#role').attr('temp');
+		$('select#role').val(value);
+	</script>
+	
+	<!-- Events Modal -->
+	<div class="modal fade" id="events-modal">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h3>Appointments</h3>
+	            </div>
+	            <div class="modal-body"></div>
+	            <div class="modal-footer">
+	                <a href="#" data-dismiss="modal" class="btn">Close</a>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
+	<script src="/bower_components/underscore/underscore-min.js"></script>
+	
+	<script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+	
+    <script type="text/javascript" src="/js/calendar.js"></script>
+    <script type="text/javascript">
+        var calendar = $("#calendar").calendar(
+            {
+                tmpl_path: "/tmpls/",
+                modal: "#events-modal",
+                modal_type : "template",
+                modal_title: function(event) { return 'Events' },
+                view: 'month',
+                events_source: '/survey/events.php',
+                onAfterEventsLoad: function(events) {
+					if(!events) {
+						return;
+					}
+					var list = $('#eventlist');
+					list.html('');
+		
+					$.each(events, function(key, val) {
+						$(document.createElement('li'))
+							.html('<a href="' + val.url + '">' + val.title + '</a>')
+							.appendTo(list);
+					});
+				},
+				onAfterViewLoad: function(view) {
+					$('.page-header h3').text(this.getTitle());
+					$('.btn-group button').removeClass('active');
+					$('button[data-calendar-view="' + view + '"]').addClass('active');
+				},
+				classes: {
+					months: {
+						general: 'label'
+					}
+				}  
+            });     
+             
+         $('.btn-group button[data-calendar-nav]').each(function() {
+				var $this = $(this);
+				$this.click(function() {
+					calendar.navigate($this.data('calendar-nav'));
+				});
+			});
+		
+			$('.btn-group button[data-calendar-view]').each(function() {
+				var $this = $(this);
+				$this.click(function() {
+					calendar.view($this.data('calendar-view'));
+				});
+			});
+		
+			$('#first_day').change(function(){
+				var value = $(this).val();
+				value = value.length ? parseInt(value) : null;
+				calendar.setOptions({first_day: value});
+				calendar.view();
+			});
+    </script>
+    <!-- Typeahead -->
+    <script src="/survey/js/typeahead.js"></script>
+    
+</body>
+</html>

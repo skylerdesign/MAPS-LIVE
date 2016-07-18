@@ -1,0 +1,105 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Appointment: {{ID:id}}</h1>
+        {{ID:noshowalert}}
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-md-8">
+        {{ID:alert}}
+        <form method="post" action="appointment.php?id={{ID:id}}">
+            <div class="form-group">
+                <input type="text" class="form-control" id="name" name="name" value="{{ID:name}}">
+            </div>
+            <!--<div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">
+				        start time
+				    </span>
+				    <input type="text" name="filter.startTime[]" class="form-control" placeholder="start time" id="start-time-input" value="" data-datetimepicker data-click-target>
+				    <span class="input-group-addon">
+				        end time
+				    </span>
+				    <input type="text" name="filter.endTime[]" class="form-control" placeholder="end time" id="end-time-input" value=""
+				    data-datetimepicker>
+				</div>
+            </div>-->
+            <div class="form-group">
+                <div class='input-group date' id='startdate'>
+                    <input type='text' class="form-control" id="start" name="start" value="{{ID:start}}" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+
+        <script type="text/javascript">
+            $(function () {
+                $('#startdate').datetimepicker();
+            });
+        </script>
+        
+        <div class="form-group">
+            <div class='input-group date' id='enddate'>
+                <input type='text' class="form-control" id="end" name="end" value="{{ID:end}}" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(function () {
+                $('#enddate').datetimepicker();
+            });
+        </script>   
+        	<div class="form-group">
+                <label>No Show: </label> {{ID:noshow}}
+            </div>      
+            <div class="form-group">
+                <!--<input type="text" class="form-control" name="user" id="user" value="{{ID:user}}">-->
+                <label>Patient: </label> {{ID:patient}}
+            </div>
+            <div class="form-group">
+                <!--<input type="text" class="form-control" name="clinician" id="clinician" value="{{ID:clinician}}">-->
+                <label>DOB: </label> {{ID:dob}}
+            </div> 
+            <div class="form-group">
+                <!--<input type="text" class="form-control" name="clinician" id="clinician" value="{{ID:clinician}}">-->
+                <label>Clinician: </label> {{ID:clinician}}
+            </div>    
+            <div class="form-group">
+	            <label>Survey Submitted:</label>
+				<div>
+					
+					{{ID:survey_links}}			
+					
+				</div>
+            </div>
+            <div class="form-group">
+	            <br>
+	            <button type="submit" class="btn btn-info" name="submit" value="1">Save Appointment</button>
+	            <button class="btn btn-default" type="reset">{{ST:reset}}</button>
+            </div>
+        </div>
+        
+        </form>
+    </div>
+</div><!-- row -->
+
+<div class="modal" id="myModal" style="display:none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div style="text-align: right;">
+                    <button class="btn btn-default btn-xs" onclick="jQuery.print('#modal_content')">Print</button>
+
+                    <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">{{ST:close}}</button>
+                </div>
+                <br>
+                <div id="modal_content"></div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

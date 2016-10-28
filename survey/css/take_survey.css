@@ -6193,8 +6193,6 @@ ul.select-scale {
 	justify-content: space-around;
 	display: -webkit-flex;
 	-webkit-justify-content: space-around;
-	
-	
 }
 ul.select-scale li {
 	
@@ -6205,12 +6203,25 @@ ul.select-scale li {
 #survey1 .question-6 ul,
 #survey1 .question-8 ul,
 
+#survey2 .question-5 ul,
 #survey2 .question-8 ul,
 #survey2 .question-9 ul,
 #survey2 .question-10 ul,
+#survey2 .question-11 ul,
 #survey2 .question-14 ul,
 #survey2 .question-16 ul,
 #survey2 .question-17 ul
+{
+    display: block !important;
+}
+
+#survey2 .question-11 ul {
+  display: block;
+}
+#survey2 .question-5 ul,
+#survey2 .question-6 ul,
+#survey2 .question-7 ul,
+#survey2 .question-8 ul
  {
     display: block;
 }
